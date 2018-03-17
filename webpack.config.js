@@ -5,7 +5,7 @@ const path = require('path')
 const webpack =  require('webpack')
 var WebpackStrip = require('webpack-strip')
 const WebpackAssetsManifest = require('webpack-assets-manifest')
-
+const ENV = require('./env').default
 
 
 module.exports = {
@@ -14,7 +14,7 @@ module.exports = {
 
     plugins: [
         new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify('development')
+            'process.env': ENV
         }),
         new WebpackAssetsManifest({
             output: '../public/asset-manifest.json',
@@ -42,10 +42,7 @@ module.exports = {
             path.join(__dirname, "/src/"),
             "node_modules"
         ]
-        /*alias: {
-            //Narrator1: path.resolve('./src/story/narrator1.js'),
-            Story1: path.resolve('./src/story/story1.js')
-        }*/
+
     },
 
     module: {
@@ -56,7 +53,7 @@ module.exports = {
               loader: 'babel-loader',
                 options: {
                     presets: ["es2015", "stage-2", "stage-3", "react"],
-                    plugins: ["transform-object-rest-spread"]
+                    plugins: ["transform-object-rest-spread", "transform-class-properties"]
                 },
             }],
         }, {

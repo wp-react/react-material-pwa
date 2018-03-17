@@ -17,39 +17,66 @@ const styles = {
   }
 }
 
-function WPCard (props) {
-  const { classes, contentObj } = props
-  return (
-    <Card className={classes.card} style={{
-      flexDirection: 'column',
-      display: 'flex'
-    }}>
-      <CardMedia
-        className={classes.media}
-        image={contentObj.image}
-        title={contentObj.title}
+class WPCard extends React.Component {
+  componentDidMount () {
+    document.querySelector('.loader').hidden = true
+  }
 
-        />
-      <CardContent>
-        <Typography variant='headline' component='h2'>
-          {contentObj.title}
-        </Typography>
-        <Typography component='p' dangerouslySetInnerHTML={{__html: contentObj.body}} />
-      </CardContent>
-      <CardActions style={{
-        justifyContent: 'flex-end',
-        flex: 1,
-        alignItems: 'flex-end'
-      }}>
-        <Button size='small' color='primary'>
+  renderCardActions = () => {
+    if (this.props.length) {
+      return (
+        <div>
+          <Button size='small' color='primary'>
             Share
           </Button>
-        <Button size='small' color='primary' data={contentObj.link}>
+          <Button size='small' color='primary' href={this.props.contentObj.link}>
             Learn More
           </Button>
-      </CardActions>
-    </Card>
-  )
+        </div>
+      )
+    } else {
+      return (
+        <div>
+          <Button size='small' color='primary' onClick={() => {
+            window.history.back()
+          }}>
+            Go Back
+          </Button>
+        </div>
+      )
+    }
+  }
+
+  render () {
+    return (
+      <Card className={this.props.classes.card} style={{
+        flexDirection: 'column',
+        display: 'flex'
+      }}>
+        <CardMedia
+          className={this.props.classes.media}
+          image={this.props.contentObj.image}
+          title={this.props.contentObj.title}
+
+        />
+        <CardContent>
+          <Typography variant='headline' component='h2'>
+            {this.props.contentObj.title}
+          </Typography>
+          <Typography component='p' dangerouslySetInnerHTML={{__html: this.props.contentObj.body}} />
+        </CardContent>
+        <CardActions style={{
+          justifyContent: 'flex-end',
+          flex: 1,
+          alignItems: 'flex-end'
+        }}>
+          {
+            this.renderCardActions()
+          }
+        </CardActions>
+      </Card>
+    )
+  }
 }
 
 WPCard.propTypes = {

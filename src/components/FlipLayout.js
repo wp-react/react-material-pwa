@@ -5,6 +5,7 @@ import * as R from 'ramda'
 // import Grid from 'material-ui/Grid'
 import WPCard from './WPCard'
 import FlipPage from 'react-flip-page'
+import {wpContent} from '../helpers/wpContent'
 
 const styles = theme => ({
   root: {
@@ -37,17 +38,12 @@ class FlipLayout extends React.Component {
   generateCards = () => {
     let wpCardsArr = []
     R.forEachObjIndexed((value, key) => {
-      const contentObj = {
-        title: value.title.rendered,
-        link: value.link.replace('http://i-create.org', ''),
-        body: value.excerpt.rendered,
-        image: (value.better_featured_image && value.better_featured_image.media_details.sizes['medium_large'] ? value.better_featured_image.media_details.sizes['medium_large'].source_url : '/images/placeholder/sc9Img1.jpg')
-      }
+      const contentObj = wpContent(value)
       wpCardsArr.push(
         <WPCard className={this.props.classes.paper} contentObj={contentObj} />
-        )
+      )
     }
-    , this.state.posts)
+      , this.state.posts)
     this.createGrid(wpCardsArr)
   }
 

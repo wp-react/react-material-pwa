@@ -68,7 +68,9 @@
   "homepage": "https://github.com/seacloud9/#readme",
   "devDependencies": {
     "babel-core": "^6.21.0",
+    "babel-eslint": "^8.2.2",
     "babel-loader": "^7.1.3",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.16.0",

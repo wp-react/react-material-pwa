@@ -62,7 +62,7 @@ class MaterialNavBar extends React.Component {
             role='button'
             onClick={this.toggleDrawer('left', false)}
             onKeyDown={this.toggleDrawer('left', false)}
-            >
+          >
             {navList}
           </div>
         </Drawer>

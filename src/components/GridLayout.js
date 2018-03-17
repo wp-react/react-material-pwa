@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import * as R from 'ramda'
 import Grid from 'material-ui/Grid'
+import {wpContent} from '../helpers/wpContent'
 import WPCard from './WPCard'
 
 const styles = theme => ({
@@ -21,7 +22,7 @@ const styles = theme => ({
 class GridLayout extends React.Component {
   constructor (props) {
     super(props)
-    this.state = props
+    this.state = {...props, wpCardsArr: []}
     this.grid = null
   }
 
@@ -34,21 +35,17 @@ class GridLayout extends React.Component {
   generateCards = () => {
     let wpCardsArr = []
     R.forEachObjIndexed((value, key) => {
-      const contentObj = {
-        title: value.title.rendered,
-        link: value.link.replace('http://i-create.org', ''),
-        body: value.excerpt.rendered,
-        image: (value.better_featured_image ? value.better_featured_image.media_details.sizes['medium_large'].source_url : '/images/placeholder/sc9Img1.jpg')
-      }
+      const contentObj = wpContent(value)
       wpCardsArr.push(
-        <Grid item xs style={{
+        <Grid key={key} item xs style={{
           flexDirection: 'column',
           display: 'flex'
         }}>
-          <WPCard className={this.props.classes.paper} contentObj={contentObj} />
+          <WPCard length={(this.state.posts.length > 1)} className={this.props.classes.paper} contentObj={contentObj} />
         </Grid>)
     }
-    , this.state.posts)
+      , this.state.posts)
+    this.setState({wpCardsArr: wpCardsArr})
     this.createGrid(wpCardsArr)
   }
 
@@ -65,6 +62,21 @@ class GridLayout extends React.Component {
     this.setState({grid: this.grid})
   }
 
+  getSingleCard = () => {
+    const valueToRender = this.state.wpCardsArr && this.state.wpCardsArr.length ? this.state.wpCardsArr : null
+    if (this.grid && !this.grid.length && this.state.wpCardsArr.length) {
+      return valueToRender.map((item, index) => {
+        return (
+          <div key={index}>
+            {item}
+          </div>
+        )
+      })
+    } else {
+      return null
+    }
+  }
+
   render () {
     return (
       <div className={this.props.classes.root}>
@@ -77,6 +89,9 @@ class GridLayout extends React.Component {
             </Grid>
           )
         })}
+        {
+          this.getSingleCard()
+        }
       </div>
     )
   }
