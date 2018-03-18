@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import { withStyles } from 'material-ui/styles'
 import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card'
 import Button from 'material-ui/Button'
@@ -19,7 +20,7 @@ const styles = {
 
 class WPCard extends React.Component {
   componentDidMount () {
-    document.querySelector('.loader').hidden = true
+    if (document.querySelector('.loader')) document.querySelector('.loader').hidden = true
   }
 
   renderCardActions = () => {
@@ -29,7 +30,7 @@ class WPCard extends React.Component {
           <Button size='small' color='primary'>
             Share
           </Button>
-          <Button size='small' color='primary' href={this.props.contentObj.link}>
+          <Button component={Link} size='small' color='primary' to={`./${this.props.contentObj.link}`}>
             Learn More
           </Button>
         </div>
@@ -37,9 +38,7 @@ class WPCard extends React.Component {
     } else {
       return (
         <div>
-          <Button size='small' color='primary' onClick={() => {
-            window.history.back()
-          }}>
+          <Button size='small' color='primary' component={Link} to={'/'} >
             Go Back
           </Button>
         </div>

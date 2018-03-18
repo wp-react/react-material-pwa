@@ -5,7 +5,7 @@ import * as R from 'ramda'
 // import Grid from 'material-ui/Grid'
 import WPCard from './WPCard'
 import FlipPage from 'react-flip-page'
-import {wpContent} from '../helpers/wpContent'
+import { wpContent } from 'wp-react-core'
 
 const styles = theme => ({
   root: {

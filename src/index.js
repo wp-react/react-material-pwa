@@ -1,6 +1,7 @@
 import 'babel-polyfill'
 // import devToolsEnhancer from 'remote-redux-devtools'
 import WordpressContainer from './containers/WordpressContainer'
+import WordpressPostContainer from './containers/WordpressPostContainer'
 // import WordpressFlipContainer from './containers/WordpressFlipContainer'
 import React from 'react'
 import ReactDOM from 'react-dom'
@@ -29,9 +30,9 @@ class App extends React.Component {
     return (
       <ConnectedRouter history={history}>
         <div>
-          <Route exact path='/' component={WordpressContainer} />
-          <Route path='/:year/:month/:day/:pageName' component={WordpressContainer} />
-          <Route path='/about' component={WordpressContainer} />
+          <Route exact path='/react-material-pwa/' component={WordpressContainer} />
+          <Route path='/react-material-pwa/:year/:month/:day/:pageName' component={WordpressPostContainer} />
+          <Route path='/react-material-pwa/about' component={WordpressContainer} />
         </div>
       </ConnectedRouter>
     )

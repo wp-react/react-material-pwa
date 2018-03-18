@@ -4,26 +4,20 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { WordpressRedux } from 'wp-react-core'
-import GridLayout from '../components/GridLayout'
+import SingleLayout from '../components/SingleLayout'
 import MaterialNavBar from '../components/MaterialNavBar'
-import InfiniteScroll from 'react-infinite-scroller'
 const { WordpressActions } = WordpressRedux
 
-class WordpressContainer extends React.PureComponent {
+class WordpressPostContainer extends React.PureComponent {
   constructor (props) {
     super(props)
-    this.state = {...props, autoLoad: false}
+    this.state = props
     this.page = 1
   }
 
   componentDidMount () {
-    document.querySelector('#loader').hidden = true
     if (this.props.match.params.pageName && !Number.isInteger(this.props.match.params.pageName)) {
       this.props.wpSlugRequested({pageName: this.props.match.params.pageName})
-    } else {
-      // you have to have at least one post
-      if (!this.state.posts.length) this.props.wpAllRequested()
-      if (this.state.posts.length) this.setState({autoLoad: true})
     }
   }
 
@@ -36,24 +30,10 @@ class WordpressContainer extends React.PureComponent {
   }
 
   render () {
-    console.log(this.state)
     return (
       <div>
         <MaterialNavBar />
-        <InfiniteScroll
-          initialLoad={this.state.autoLoad}
-          pageStart={this.page}
-          loadMore={() => {
-            if (!this.state.fetching) {
-              ++this.page
-              this.props.wpPageRequested({pageNumber: this.page})
-            }
-          }}
-          hasMore
-          loader={<div key={1} className='loader'>Loading ...</div>}
-        >
-          <GridLayout posts={this.state.posts} key={0} />
-        </InfiniteScroll>
+        <SingleLayout post={this.state.post} key={0} />
       </div>
     )
   }
@@ -76,4 +56,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(WordpressContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(WordpressPostContainer)
