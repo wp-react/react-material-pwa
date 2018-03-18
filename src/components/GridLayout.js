@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import * as R from 'ramda'
 import Grid from 'material-ui/Grid'
-import {wpContent} from '../helpers/wpContent'
+import { wpContent } from 'wp-react-core'
 import WPCard from './WPCard'
 
 const styles = theme => ({

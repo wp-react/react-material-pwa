@@ -63,7 +63,7 @@ class WPCard extends React.Component {
           <Typography variant='headline' component='h2'>
             {this.props.contentObj.title}
           </Typography>
-          <Typography component='p' dangerouslySetInnerHTML={{__html: this.props.contentObj.body}} />
+          <Typography component='p' dangerouslySetInnerHTML={{__html: this.props.length ? this.props.contentObj.excerpt : this.props.contentObj.body}} />
         </CardContent>
         <CardActions style={{
           justifyContent: 'flex-end',

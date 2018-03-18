@@ -27,7 +27,6 @@ class WordpressContainer extends React.PureComponent {
   }
 
   componentWillReceiveProps (newProps) {
-    console.log(newProps)
     this.setState(newProps)
   }
 
